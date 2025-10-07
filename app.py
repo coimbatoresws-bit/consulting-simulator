@@ -1,5 +1,5 @@
 # ============================================================
-# Tech Consulting Interview Simulator – Streamlit (Clean Build)
+# Tech Consulting Interview Simulator – Streamlit (Stable Build)
 # ============================================================
 
 import random, textwrap
@@ -167,7 +167,8 @@ if st.session_state.topic:
                     explain(q, sel)
                     st.session_state.answered = True
         with c2:
-            if st.button("Hint"): st.info(q.get("hint", "No hint available."))
+            if st.button("Hint"):
+                st.info(q.get("hint", "No hint available."))
         with c3:
             if st.button(f"50/50 ({st.session_state.fifty_left})", disabled=st.session_state.fifty_left==0 or st.session_state.answered):
                 correct = q["answer"]
@@ -175,7 +176,7 @@ if st.session_state.topic:
                 hide = set(random.sample(wrong, k=min(2, len(wrong))))
                 st.session_state.removed |= hide
                 st.session_state.fifty_left -= 1
-                st.experimental_rerun()
+                st.rerun()
         with c4:
             if st.button("Skip", disabled=st.session_state.answered):
                 st.session_state.q_index += 1
@@ -183,7 +184,7 @@ if st.session_state.topic:
                 st.session_state.removed = set()
                 st.session_state.selected = -1
                 st.session_state.answered = False
-                st.experimental_rerun()
+                st.rerun()
 
         if st.session_state.answered:
             if st.button("Next →", type="primary"):
@@ -191,6 +192,6 @@ if st.session_state.topic:
                 st.session_state.removed = set()
                 st.session_state.selected = -1
                 st.session_state.answered = False
-                st.experimental_rerun()
+                st.rerun()
 else:
     st.info("Select a topic in the sidebar and click Start / Reset Topic.")
